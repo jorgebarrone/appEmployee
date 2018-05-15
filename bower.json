@@ -1,6 +1,6 @@
 {
-  "name": "Employee app",
-  "description": "Employee records",
+  "name": "appEmployee",
+  "description": "Employee record",
   "main": "index.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"

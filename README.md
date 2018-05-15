@@ -1,6 +1,6 @@
-# \<Employee app\>
+# \<appEmployee\>
 
-Employee records
+Employee record
 
 ## Install the Polymer-CLI
 

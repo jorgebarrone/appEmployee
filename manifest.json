@@ -1,7 +1,7 @@
 {
-  "name": "Employee app",
-  "short_name": "Employee app",
-  "description": "Employee records",
+  "name": "appEmployee",
+  "short_name": "appEmployee",
+  "description": "Employee record",
   "start_url": "/",
   "display": "standalone"
 }
