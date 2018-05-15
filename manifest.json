@@ -1,0 +1,7 @@
+{
+  "name": "Employee app",
+  "short_name": "Employee app",
+  "description": "Employee records",
+  "start_url": "/",
+  "display": "standalone"
+}
