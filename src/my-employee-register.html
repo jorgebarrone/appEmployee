@@ -1,0 +1,128 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-employee-register">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+
+      paper-button.custom {
+        --paper-button-ink-color: var(--paper-pink-a200);
+        /* These could also be individually defined for each of the
+          specific css classes, but we'll just do it once as an example */
+        --paper-button-flat-keyboard-focus: {
+          background-color: var(--paper-pink-a200);
+          color: white !important;
+        };
+        --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-pink-a200) !important;
+          color: white !important;
+        };
+      }
+      paper-button.custom:hover {
+        background-color: var(--paper-indigo-100);
+      }
+      paper-button.pink {
+        color: var(--paper-pink-a200);
+
+      }
+      paper-button.indigo {
+        background-color: var(--paper-indigo-500);
+        color: white;
+        --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-pink-a200) !important;
+          color: white !important;
+        };
+      }
+      paper-button.green {
+        background-color: var(--paper-green-500);
+        color: white;
+      }
+      paper-button.green[active] {
+        background-color: var(--paper-red-500);
+      }
+      paper-button.disabled {
+        color: white;
+      }
+
+
+    </style>
+
+    <div class="card">
+      <h1>[[languageData.form01Title]]</h1>
+      <paper-input id="inputName" label="[[languageData.form01Input]]" value="{{myEmployee}}" on-change="getPostBody"></paper-input>
+      <paper-button raised class="custom green" on-click="sendData">[[languageData.form01Button]]</paper-button>
+    </div>
+    <iron-ajax
+      id="postData"
+      url="http://localhost:3000/employee"
+      content-type="application/json"
+      method="post"
+      body='{{postBody}}'
+      <!-- last-response='{{myEmployee}}' -->
+      handle-as="json">
+    </iron-ajax>
+  </template>
+
+  <script>
+    class MyEmployeeRegister extends Polymer.Element {
+      static get is() { return 'my-employee-register'; }
+
+      static get properties() {
+        return {
+          myEmployee: {
+            type: String,
+            value: ''
+          },
+          postBody: {
+            type: Object,
+            value: {}
+          }
+        };
+      }
+
+      handleRedirect(event) {
+        console.log('Si se genera el evento');
+        this.dispatchEvent(new CustomEvent('handle-redirect', {
+            bubbles: true,
+            composed: true,
+            detail: 'employee-register'
+        }));
+      }
+
+      getPostBody() {
+        this.postBody = {
+          "id": '',
+          "name" : this.myEmployee
+        };
+      }
+
+      sendData() {
+        // console.log(this.myEmployee)
+        this.$.postData.generateRequest();
+        this.handleRedirect();
+        this.myEmployee = {};
+			}
+
+    }
+
+    window.customElements.define(MyEmployeeRegister.is, MyEmployeeRegister);
+  </script>
+</dom-module>

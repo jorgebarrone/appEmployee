@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="i18n-elemb">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `i18n-elemb`
+     * Translate Web Component
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class I18nElemb extends Polymer.Element {
+      static get is() { return 'i18n-elemb'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'i18n-elemb'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(I18nElemb.is, I18nElemb);
+  </script>
+</dom-module>

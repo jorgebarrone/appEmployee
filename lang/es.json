@@ -1,0 +1,14 @@
+{
+  "menutitle"  : "Menú",
+  "apptitle"   : "Mi Aplicación",
+  "form01"     : "Registrar empleado",
+  "form02"     : "Lista de empleados",
+  "form03"     : "Actualizar empleados",
+  "form01Title" : "Registro de Empleados",
+  "form01Input" : "Nombre del Empleado",
+  "form01Button" : "Guardar",
+  "form02Button" : "Editar",
+  "form03Title" : "Empleados",
+  "form03Input" : "Nombre del Empleado",
+  "form03Button" : "Actualizar"
+}

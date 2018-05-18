@@ -1,0 +1,14 @@
+{
+  "menutitle"  : "Menu",
+  "apptitle"   : "My App",
+  "form01"     : "Employees register",
+  "form02"     : "Employees list",
+  "form03"     : "Employee Update",
+  "form01Title" : "Employee Register",
+  "form01Input" : "Employee name",
+  "form01Button" : "Save",
+  "form02Button" : "Update",
+  "form03Title" : "Employees",
+  "form03Input" : "Employee name",
+  "form03Button" : "Update"
+}

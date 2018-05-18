@@ -1,0 +1,126 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-employee-update">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+
+      paper-button.custom {
+        --paper-button-ink-color: var(--paper-pink-a200);
+        /* These could also be individually defined for each of the
+          specific css classes, but we'll just do it once as an example */
+        --paper-button-flat-keyboard-focus: {
+          background-color: var(--paper-pink-a200);
+          color: white !important;
+        };
+        --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-pink-a200) !important;
+          color: white !important;
+        };
+      }
+      paper-button.custom:hover {
+        background-color: var(--paper-indigo-100);
+      }
+      paper-button.pink {
+        color: var(--paper-pink-a200);
+
+      }
+      paper-button.indigo {
+        background-color: var(--paper-indigo-500);
+        color: white;
+        --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-pink-a200) !important;
+          color: white !important;
+        };
+      }
+      paper-button.green {
+        background-color: var(--paper-green-500);
+        color: white;
+      }
+      paper-button.green[active] {
+        background-color: var(--paper-red-500);
+      }
+      paper-button.disabled {
+        color: white;
+      }
+      .empName {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+
+    </style>
+    <iron-ajax
+      id="getData"
+      auto
+      url="[[employeeId]]"
+      content-type="application/json"
+      last-response='{{dataEmployee}}'
+      handle-as="json">
+    </iron-ajax>
+    <div class="card">
+      <h1>[[languageData.form03]]</h1>
+      <paper-listbox
+        slot="dropdown-content"
+        attr-for-selected="employee-id"
+        fallback-selection="es">
+        <template is="dom-repeat" items="[[dataEmployee]]" as="employee">
+          <paper-item
+            class="empName">
+            [[employee.name]]
+          </paper-item>
+          <paper-button
+            raised class="custom indigo"
+            employee-id="[[employee.id]]"
+            on-click="editEmployee"
+            ind="[[index]]">
+            [[languageData.form03Button]]
+          </paper-button>
+        </template>
+      </paper-listbox>
+    </div>
+  </template>
+
+  <script>
+    class MyEmployeeUpdate extends Polymer.Element {
+      static get is() { return 'my-employee-update'; }
+
+      static get properties() {
+        return {
+          dataEmployee: {
+            type: Array,
+            value: []
+          },
+          employeeId: {
+              type: Number,
+          }
+        };
+      }
+
+      editEmployee(event) {
+        this.dispatchEvent(new CustomEvent('edit-employee', {
+            bubbles: true,
+            composed: true,
+            // detail: this.dataEmployee[event.target.employeeSelected]
+            detail: event.target.employeeId
+        }));
+      }
+
+    }
+    window.customElements.define(MyEmployeeUpdate.is, MyEmployeeUpdate);
+  </script>
+</dom-module>
