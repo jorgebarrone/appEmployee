@@ -110,7 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             role="main">
           <my-employee-register name="employee-register" language-data="[[data]]" on-handle-redirect="handleRedirect"></my-employee-register>
           <my-employee-list name="employee-list" language-data="[[data]]" on-edit-employee="editEmployee"></my-employee-list>
-          <my-employee-update name="employee-update" language-data="[[data]]" employee-id="[[empid]]" ></my-employee-update>
+          <my-employee-update name="employee-update" language-data="[[data]]" employee-id="[[empid]]" on-update-employee="updateEmployee" ></my-employee-update>
           <my-view3 name="view3"></my-view3>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
@@ -156,9 +156,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       editEmployee(event) {
-        let myQuery = "http://localhost:3000/employee/" + event.detail
+        let myQuery = event.detail
         this.set('empid', myQuery);
         this.page = "employee-update";
+      }
+
+      updateEmployee(event) {
+        this.page = event.detail;
       }
 
       _routePageChanged(page) {

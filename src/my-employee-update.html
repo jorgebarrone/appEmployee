@@ -67,9 +67,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-ajax
       id="getData"
       auto
-      url="[[employeeId]]"
+      url="http://localhost:3000/employee/[[employeeId]]"
+      method="GET"
       content-type="application/json"
       last-response='{{dataEmployee}}'
+      handle-as="json">
+    </iron-ajax>
+    <iron-ajax
+      id="putData"
+      url="http://localhost:3000/employee/[[employeeId]]"
+      method="PUT"
+      body="{{postBody}}"
+      content-type="application/json"
+      <!-- last-response='{{dataEmployee}}' -->
       handle-as="json">
     </iron-ajax>
     <div class="card">
@@ -78,19 +88,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         slot="dropdown-content"
         attr-for-selected="employee-id"
         fallback-selection="es">
-        <template is="dom-repeat" items="[[dataEmployee]]" as="employee">
-          <paper-item
+          <paper-input
+            id="inputName"
+            label="[[languageData.form01Input]]"
+            value="[[dataEmployee.name]]"
+            on-change="getPostBody"
             class="empName">
-            [[employee.name]]
-          </paper-item>
+            [[dataEmployee.name]]
+          </paper-input>
+
           <paper-button
             raised class="custom indigo"
             employee-id="[[employee.id]]"
-            on-click="editEmployee"
+            on-click="updateEmployee"
             ind="[[index]]">
             [[languageData.form03Button]]
           </paper-button>
-        </template>
       </paper-listbox>
     </div>
   </template>
@@ -105,18 +118,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Array,
             value: []
           },
+          employeeName: {
+            type: String,
+            value: ''
+          },
           employeeId: {
               type: Number,
+          },
+          postBody: {
+            type: Object,
+            value: {}
           }
         };
       }
 
-      editEmployee(event) {
-        this.dispatchEvent(new CustomEvent('edit-employee', {
+      getPostBody() {
+        this.employeeName = this.$.inputName.value
+        this.postBody = {
+          "id": this.employeeId,
+          "name" : this.employeeName
+        };
+      }
+
+      updateEmployee() {
+        this.$.putData.generateRequest();
+        this.dispatchEvent(new CustomEvent('update-employee', {
             bubbles: true,
             composed: true,
             // detail: this.dataEmployee[event.target.employeeSelected]
-            detail: event.target.employeeId
+            detail: 'employee-register'
         }));
       }
 
